@@ -4,16 +4,19 @@ import com.mongodb.MongoClientSettings
 import com.mongodb.client.MongoClient
 import com.mongodb.client.MongoClients
 import com.mongodb.client.MongoCollection
+import de.skycave.chestrefiller.annotations.Prefix
 import de.skycave.chestrefiller.codecs.ChestCodecProvider
 import de.skycave.chestrefiller.codecs.ChestTemplateCodecProvider
 import de.skycave.chestrefiller.codecs.ItemStackCodec
 import de.skycave.chestrefiller.codecs.LocationCodec
+import de.skycave.chestrefiller.commands.ChestRefillCommand
 import de.skycave.chestrefiller.models.Chest
 import de.skycave.chestrefiller.models.ChestTemplate
 import de.skycave.chestrefiller.models.SkyCavePlugin
 import org.bson.codecs.configuration.CodecRegistries
 import org.bukkit.entity.Player
 
+@Prefix("&fSky&3Cave &8» ")
 class ChestRefiller: SkyCavePlugin() {
 
     val chestSetMode = HashMap<Player, String>()
@@ -39,7 +42,8 @@ class ChestRefiller: SkyCavePlugin() {
         chests = db.getCollection("chests", Chest::class.java)
         chestTemplates = db.getCollection("chest_templates", ChestTemplate::class.java)
 
-
+        // Register commands
+        registerCommand("chestrefill", ChestRefillCommand(this))
     }
 
 

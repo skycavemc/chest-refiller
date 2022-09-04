@@ -6,4 +6,7 @@ main: de.skycave.chestrefiller.ChestRefiller
 depend:
   - SkyBeeCore
 
-
+commands:
+  chestrefill:
+    aliases: [crefill]
+    permission: skycave.chestrefiller.chestrefill
