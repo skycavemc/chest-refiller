@@ -10,6 +10,8 @@ import de.skycave.chestrefiller.codecs.ChestTemplateCodecProvider
 import de.skycave.chestrefiller.codecs.ItemStackCodec
 import de.skycave.chestrefiller.codecs.LocationCodec
 import de.skycave.chestrefiller.commands.ChestRefillCommand
+import de.skycave.chestrefiller.listeners.InteractListener
+import de.skycave.chestrefiller.listeners.LeaveListener
 import de.skycave.chestrefiller.models.Chest
 import de.skycave.chestrefiller.models.ChestTemplate
 import de.skycave.chestrefiller.models.SkyCavePlugin
@@ -44,6 +46,14 @@ class ChestRefiller: SkyCavePlugin() {
 
         // Register commands
         registerCommand("chestrefill", ChestRefillCommand(this))
+
+        // Register events
+        registerEvents(
+            InteractListener(this),
+            LeaveListener(this)
+        )
+
+        TODO("Refill chests")
     }
 
 
