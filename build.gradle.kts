@@ -13,6 +13,8 @@ repositories {
 dependencies {
     implementation(kotlin("stdlib"))
     compileOnly("io.papermc.paper:paper-api:1.19.2-R0.1-SNAPSHOT")
+    implementation("org.mongodb:mongodb-driver-sync:4.7.1")
+    implementation("org.apache.commons:commons-lang3:3.12.0")
 }
 
 java {
