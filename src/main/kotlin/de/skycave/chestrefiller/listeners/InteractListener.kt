@@ -1,6 +1,10 @@
 package de.skycave.chestrefiller.listeners
 
+import com.mongodb.client.model.Filters
 import de.skycave.chestrefiller.ChestRefiller
+import de.skycave.chestrefiller.enums.Message
+import de.skycave.chestrefiller.models.Chest
+import org.bukkit.Material
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.block.Action
@@ -17,12 +21,27 @@ class InteractListener(private val main: ChestRefiller): Listener {
         if (event.action != Action.LEFT_CLICK_BLOCK && event.action != Action.RIGHT_CLICK_BLOCK) {
             return
         }
+
         val player = event.player
-        if (!main.chestSetMode.containsKey(player)) {
+        val name = main.chestSetMode[player] ?: return
+        val block = event.clickedBlock ?: return
+        if (block.type != Material.CHEST && block.type != Material.TRAPPED_CHEST) {
             return
         }
-        TODO("Check if locations are overlapping")
-        TODO("Create chest")
+
+        val location = block.location
+        val overlappingChest = main.chests.find(Filters.eq("lcoation", location)).first()
+        if (overlappingChest != null) {
+            Message.CHEST_CREATE_OVERLAP.get().replace("%name", overlappingChest.name).send(player)
+            return
+        }
+
+        val chest = Chest()
+        chest.name = name
+        chest.location = location
+        main.chests.insertOne(chest)
+        Message.CHEST_CREATE_SUCCESS.get().replace("%name", name).send(player)
+        main.chestSetMode.remove(player)
     }
 
 }
