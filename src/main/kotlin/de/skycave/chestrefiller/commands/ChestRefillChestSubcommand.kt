@@ -56,6 +56,9 @@ class ChestRefillChestSubcommand: java.util.function.BiFunction<CommandSender, A
             "remove" -> {
                 TODO("remove command")
             }
+            "refill" -> {
+                TODO("refill command")
+            }
             else -> {
                 Message.COMMAND_UNKNOWN.get().send(sender)
                 return true

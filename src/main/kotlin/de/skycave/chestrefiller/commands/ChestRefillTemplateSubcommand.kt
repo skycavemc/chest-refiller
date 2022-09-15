@@ -16,10 +16,13 @@ class ChestRefillTemplateSubcommand: BiFunction<CommandSender, Array<out String>
                 TODO("create subcommand")
             }
             "remove" -> {
-                TODO("create subcommand")
+                TODO("remove subcommand")
             }
             "list" -> {
-                TODO("create subcommand")
+                TODO("list subcommand")
+            }
+            "info" -> {
+                TODO("info subcommand")
             }
             else -> {
                 Message.COMMAND_UNKNOWN.get().send(sender)

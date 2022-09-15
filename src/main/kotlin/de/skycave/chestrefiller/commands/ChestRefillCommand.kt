@@ -1,13 +1,12 @@
 package de.skycave.chestrefiller.commands
 
-import com.mongodb.client.model.Filters
 import de.skycave.chestrefiller.ChestRefiller
 import de.skycave.chestrefiller.enums.Message
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import org.bukkit.command.TabCompleter
-import org.bukkit.entity.Player
+import org.bukkit.util.StringUtil
 
 class ChestRefillCommand(private val main: ChestRefiller): CommandExecutor, TabCompleter {
 
@@ -32,24 +31,45 @@ class ChestRefillCommand(private val main: ChestRefiller): CommandExecutor, TabC
                 }
                 return ChestRefillTemplateSubcommand().apply(sender, args)
             }
-            else -> {
-                Message.COMMAND_UNKNOWN.get().send(sender)
-                return true
-            }
+            "help" -> sendHelp(sender)
+            else -> Message.COMMAND_UNKNOWN.get().send(sender)
         }
+        return true
     }
 
     private fun sendHelp(sender: CommandSender) {
-        TODO("send help")
+        Message.CHEST_CREATE_HELP.get().send(sender)
+        Message.CHEST_ABORT_HELP.get().send(sender)
     }
 
     override fun onTabComplete(
         sender: CommandSender,
         command: Command,
         label: String,
-        args: Array<out String>?
-    ): MutableList<String>? {
-        TODO("Not yet implemented")
+        args: Array<out String>
+    ): MutableList<String> {
+        var arguments = emptyList<String>()
+        val completions = ArrayList<String>()
+
+        if (args.size == 1) {
+            arguments = listOf("chest", "template", "help")
+            StringUtil.copyPartialMatches(args[0], arguments, completions)
+        }
+        if (args.size == 2) {
+            when (args[0].lowercase()) {
+                "chest" -> {
+                    arguments = listOf("create", "abort", "list", "remove", "info")
+                }
+                "template" -> {
+                    arguments = listOf("create", "list", "remove", "info")
+                }
+            }
+            StringUtil.copyPartialMatches(args[1], arguments, completions)
+        }
+        // TODO remove and info database lookup
+
+        completions.sort()
+        return completions
     }
 
 }
