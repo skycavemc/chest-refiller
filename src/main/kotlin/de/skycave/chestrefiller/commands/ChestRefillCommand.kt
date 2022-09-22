@@ -66,7 +66,23 @@ class ChestRefillCommand(private val main: ChestRefiller): CommandExecutor, TabC
             }
             StringUtil.copyPartialMatches(args[1], arguments, completions)
         }
-        // TODO remove and info database lookup
+        if (args.size == 3) {
+            when (args[0].lowercase()) {
+                "chest" -> {
+                    if (args[1].equals("remove", true) || args[1].equals("info", true)) {
+                        val chests = main.chests.find()
+                        arguments = chests.map { it.name }.toList()
+                    }
+                }
+                "template" -> {
+                    if (args[1].equals("remove", true) || args[1].equals("info", true)) {
+                        val templates = main.chestTemplates.find()
+                        arguments = templates.map { it.name }.toList()
+                    }
+                }
+            }
+            StringUtil.copyPartialMatches(args[1], arguments, completions)
+        }
 
         completions.sort()
         return completions
