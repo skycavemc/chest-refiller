@@ -21,6 +21,8 @@ enum class Message(private val message: String) {
 
     CHEST_CREATE_HELP("&e/crefill chest create <Name> &8» &8Erstellt eine neue Kiste"),
     CHEST_ABORT_HELP("&e/crefill chest abort &8» &8Bricht die Erstellung ab"),
+
+    CHEST_LIST_ENTRY("&e%name &8: &a%location"),
     ;
 
     fun get(): ChatMessage {

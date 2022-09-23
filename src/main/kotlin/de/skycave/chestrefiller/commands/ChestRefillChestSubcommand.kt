@@ -3,6 +3,7 @@ package de.skycave.chestrefiller.commands
 import com.mongodb.client.model.Filters
 import de.skycave.chestrefiller.ChestRefiller
 import de.skycave.chestrefiller.enums.Message
+import de.skycave.chestrefiller.utils.FormattingUtils
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.bukkit.plugin.java.JavaPlugin
@@ -51,7 +52,14 @@ class ChestRefillChestSubcommand: java.util.function.BiFunction<CommandSender, A
                 return true
             }
             "list" -> {
-                TODO("list command")
+                val chests = main.chests.find()
+                for (chest in chests) {
+                    Message.CHEST_LIST_ENTRY.get()
+                        .replace("%name", chest.name)
+                        .replace("%location", FormattingUtils.locationAsString(chest.location))
+                        .send(sender)
+                }
+                return true
             }
             "remove" -> {
                 TODO("remove command")
