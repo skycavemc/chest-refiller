@@ -2,7 +2,6 @@ package de.skycave.chestrefiller.listeners
 
 import com.mongodb.client.model.Filters
 import de.skycave.chestrefiller.ChestRefiller
-import de.skycave.chestrefiller.enums.Message
 import de.skycave.chestrefiller.models.Chest
 import org.bukkit.Material
 import org.bukkit.event.EventHandler
@@ -32,7 +31,7 @@ class InteractListener(private val main: ChestRefiller): Listener {
         val location = block.location
         val overlappingChest = main.chests.find(Filters.eq("lcoation", location)).first()
         if (overlappingChest != null) {
-            Message.CHEST_CREATE_OVERLAP.get().replace("%name", overlappingChest.name).send(player)
+            main.messages.get("chest-create-overlap").replace("%name", overlappingChest.name).send(player)
             return
         }
 
@@ -40,7 +39,7 @@ class InteractListener(private val main: ChestRefiller): Listener {
         chest.name = name
         chest.location = location
         main.chests.insertOne(chest)
-        Message.CHEST_CREATE_SUCCESS.get().replace("%name", name).send(player)
+        main.messages.get("chest-create-success").replace("%name", name).send(player)
         main.chestSetMode.remove(player)
     }
 

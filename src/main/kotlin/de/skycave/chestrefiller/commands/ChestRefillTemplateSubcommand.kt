@@ -1,7 +1,6 @@
 package de.skycave.chestrefiller.commands
 
 import de.skycave.chestrefiller.ChestRefiller
-import de.skycave.chestrefiller.enums.Message
 import org.bukkit.command.CommandSender
 import org.bukkit.plugin.java.JavaPlugin
 import java.util.function.BiFunction
@@ -25,7 +24,7 @@ class ChestRefillTemplateSubcommand: BiFunction<CommandSender, Array<out String>
                 TODO("info subcommand")
             }
             else -> {
-                Message.COMMAND_UNKNOWN.get().send(sender)
+                main.messages.get("command-unknown").send(sender)
                 return true
             }
         }

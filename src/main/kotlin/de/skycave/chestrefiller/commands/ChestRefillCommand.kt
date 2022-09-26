@@ -1,7 +1,6 @@
 package de.skycave.chestrefiller.commands
 
 import de.skycave.chestrefiller.ChestRefiller
-import de.skycave.chestrefiller.enums.Message
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -32,14 +31,14 @@ class ChestRefillCommand(private val main: ChestRefiller): CommandExecutor, TabC
                 return ChestRefillTemplateSubcommand().apply(sender, args)
             }
             "help" -> sendHelp(sender)
-            else -> Message.COMMAND_UNKNOWN.get().send(sender)
+            else -> main.messages.get("command-unknown").send(sender)
         }
         return true
     }
 
     private fun sendHelp(sender: CommandSender) {
-        Message.CHEST_CREATE_HELP.get().send(sender)
-        Message.CHEST_ABORT_HELP.get().send(sender)
+        main.messages.get("chest-create-help").send(sender)
+        main.messages.get("chest-abort-help").send(sender)
     }
 
     override fun onTabComplete(
